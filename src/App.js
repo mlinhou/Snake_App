@@ -13,6 +13,8 @@ function App() {
   const [snake, setSnake] = useState(initialSnakePosition);
   const [direction, setDirection] = useState("UP");
   const [isPaused, setIsPaused] = useState(false);
+  const [score, setScore] = useState(0);
+  const [speed, setSpeed] = useState(200);
 
   function renderBoard() {
     let cellArray = [];
@@ -76,38 +78,53 @@ function App() {
     
     setSnake(newSnake);
 
+    //game over if snake touches self
+    for(let i=1; i<newSnake.length; i++){
+      
+      if(newSnake[0].x == newSnake[i].x && newSnake[0].y == newSnake[i].y){
+        setIsPaused(true);
+      }
+    }
+
+    //if food is eaten
     if(newSnake[0].x == food.x && newSnake[0].y == food.y){
-      const randomX = Math.floor(Math.random() * 20) + 1;
-      const randomY = Math.floor(Math.random() * 20) + 1;
+      const randomX = Math.floor(Math.random() * 20);
+      const randomY = Math.floor(Math.random() * 20);
       setFood({x: randomX, y: randomY});
+      setScore(score + 100);
+      setSpeed(speed - 10);
     }
     
   }
 
   function startOver() {
     setSnake(initialSnakePosition);
+    setFood({ x: 5, y: 5});
+    setScore(0);
+    setDirection("UP");
+    setSpeed(200);
     setIsPaused(false);
   }
 
   const handleArrowKeyPress = (event) => {
     switch (event.key) {
       case 'ArrowUp':
-        console.log('Arrow Up key pressed!');
+        
         setDirection("UP")
         // Handle Arrow Up key press
         break;
       case 'ArrowDown':
-        console.log('Arrow Down key pressed!');
+        
         setDirection("DOWN")
         // Handle Arrow Down key press
         break;
       case 'ArrowLeft':
-        console.log('Arrow Left key pressed!');
+        
         setDirection("LEFT")
         // Handle Arrow Left key press
         break;
       case 'ArrowRight':
-        console.log('Arrow Right key pressed!');
+        
         setDirection("RIGHT")
         // Handle Arrow Right key press
         break;
@@ -124,15 +141,16 @@ function App() {
     };
   }, []); // Empty dependency array means this effect runs once on mount
 
+  //Updates game
   useEffect(() => {
-    let interval = setInterval(updateGame, 300);
+    let interval = setInterval(updateGame, speed);
     return () => clearInterval(interval, updateGame);
   });
 
   return (
     <div className="container">
       <div className="score">
-        Score: <span>30</span>
+        Score: <span>{score}</span>
       </div>
       {!isPaused ? 
         <div className="board">
