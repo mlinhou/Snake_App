@@ -10,6 +10,7 @@ function App() {
   ];
 
   const [food, setFood] = useState({ x: 5, y: 5});
+  const [slowItem, setSlowItem] = useState({ x: 10, y: 10 });
   const [snake, setSnake] = useState(initialSnakePosition);
   const [direction, setDirection] = useState("UP");
   const [isPaused, setIsPaused] = useState(false);
@@ -26,6 +27,11 @@ function App() {
         let isFood = food.x === row && food.y === col;
         if(isFood){
           className = className + " food";
+        }
+
+        //reduce speed item
+        if(speed <= 180 && slowItem.x === row && slowItem.y === col){
+          className = className + " slowItem";
         }
 
         //checks first object if true, if not then second object, etc...
@@ -52,7 +58,12 @@ function App() {
     return cellArray;
   }
 
+  function speedBtn() {
+    setSpeed(200);
+  }
+
   function updateGame() {
+    console.log(speed);
     let newSnake = [...snake];
     //remember the x is based on row number, so moving down adds 1 to x
     //adds a new element to the array at the beginning to move the snake
@@ -78,6 +89,14 @@ function App() {
     
     setSnake(newSnake);
 
+    //if eats the slow item
+    if(newSnake[0].x == slowItem.x && newSnake[0].y == slowItem.y && speed <= 180){
+      const randomX = Math.floor(Math.random() * 20);
+      const randomY = Math.floor(Math.random() * 20);
+      setSpeed(speed*2);
+      setSlowItem({x: randomX, y: randomY});
+    }
+
     //game over if snake touches self
     for(let i=1; i<newSnake.length; i++){
       
@@ -92,7 +111,16 @@ function App() {
       const randomY = Math.floor(Math.random() * 20);
       setFood({x: randomX, y: randomY});
       setScore(score + 100);
-      setSpeed(speed - 10);
+
+      //speed according to score
+      if(speed < 100){
+        setSpeed(speed - 5);
+      }
+      else if(speed < 50){
+        setSpeed(speed - 2);
+      } else {
+        setSpeed(speed - 10);
+      }
     }
     
   }
@@ -151,6 +179,7 @@ function App() {
     <div className="container">
       <div className="score">
         Score: <span>{score}</span>
+        <button onClick={speedBtn}>SPEED 200</button>
       </div>
       {!isPaused ? 
         <div className="board">
