@@ -35,7 +35,7 @@ function App() {
         }
         
         //if snakehead is out of bounds
-        if(snake[0].x < 0 || snake[0].y < 0 || snake[0].x > 20 || snake[0].y > 20){
+        if(snake[0].x < 0 || snake[0].y < 0 || snake[0].x > 19 || snake[0].y > 19){
           setIsPaused(true);
         }
 
