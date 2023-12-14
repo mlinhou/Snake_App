@@ -15,7 +15,8 @@ function App() {
   const [direction, setDirection] = useState("UP");
   const [isPaused, setIsPaused] = useState(false);
   const [score, setScore] = useState(0);
-  const [speed, setSpeed] = useState(200);
+  const [speed, setSpeed] = useState(150);
+  const [numEaten, setNumEaten] = useState(0);
 
   function renderBoard() {
     let cellArray = [];
@@ -30,7 +31,7 @@ function App() {
         }
 
         //reduce speed item
-        if(speed <= 180 && slowItem.x === row && slowItem.y === col){
+        if(numEaten >= 2 && slowItem.x === row && slowItem.y === col){
           className = className + " slowItem";
         }
 
@@ -59,7 +60,7 @@ function App() {
   }
 
   function speedBtn() {
-    setSpeed(200);
+    setSpeed(150);
   }
 
   function updateGame() {
@@ -90,11 +91,12 @@ function App() {
     setSnake(newSnake);
 
     //if eats the slow item
-    if(newSnake[0].x == slowItem.x && newSnake[0].y == slowItem.y && speed <= 180){
+    if(newSnake[0].x == slowItem.x && newSnake[0].y == slowItem.y && numEaten >= 2){
       const randomX = Math.floor(Math.random() * 20);
       const randomY = Math.floor(Math.random() * 20);
-      setSpeed(speed*2);
+      setSpeed(speed+50);
       setSlowItem({x: randomX, y: randomY});
+      setNumEaten(0);
     }
 
     //game over if snake touches self
@@ -112,6 +114,8 @@ function App() {
       setFood({x: randomX, y: randomY});
       setScore(score + 100);
 
+      //increase numEaten
+      setNumEaten(numEaten + 1);
       //speed according to score
       if(speed < 100){
         setSpeed(speed - 5);
@@ -130,7 +134,8 @@ function App() {
     setFood({ x: 5, y: 5});
     setScore(0);
     setDirection("UP");
-    setSpeed(200);
+    setSpeed(150);
+    setNumEaten(0);
     setIsPaused(false);
   }
 
@@ -179,7 +184,12 @@ function App() {
     <div className="container">
       <div className="score">
         Score: <span>{score}</span>
-        <button onClick={speedBtn}>SPEED 200</button>
+      </div>
+      <div className="slowSpawn">
+        {numEaten>=2 ? 
+        <div>SLOW SPAWNED</div> 
+        :
+        <div>{2 - numEaten} before spawn</div>} 
       </div>
       {!isPaused ? 
         <div className="board">

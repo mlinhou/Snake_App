@@ -17,6 +17,10 @@
     color: white;
 }
 
+.slowSpawn{
+    color: yellow;
+}
+
 .board{
     display: grid;
     grid-template-columns: repeat(20,30px);
