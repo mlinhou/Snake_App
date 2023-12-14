@@ -4,7 +4,7 @@
 }
 
 .container{
-    background-color: #111;
+    background-color: #0b028b;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -26,22 +26,27 @@
 }
 
 .cell{
-    background-color: white;
+    background-color: rgb(151, 148, 148);
     width: 30px;
     height: 30px;
 }
 
 .food{
-    background-color: red;
+    background-color: rgb(167, 22, 22);
+}
+
+.slowItem{
+    background-color: yellow;
 }
 
 .snake{
-    background-color: green;
+    background-color: black;
 }
 
 .snakehead{
     background-color: black;
 }
+
 
 .game-over-popup{
     color: white;
