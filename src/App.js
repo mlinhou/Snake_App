@@ -182,23 +182,36 @@ function App() {
 
   return (
     <div className="container">
-      <div className="score">
-        Score: <span>{score}</span>
+      
+      {!isPaused ?
+        <div className="top">
+          <div className="score">
+          Score: <span>{score}</span>
+          </div>
+          <div className="slowSpawn">
+          {numEaten>=2 ? 
+          <div>SLOW SPAWNED</div> 
+          :
+          <div>{2 - numEaten} before spawn</div>
+          } 
+        </div>
       </div>
-      <div className="slowSpawn">
-        {numEaten>=2 ? 
-        <div>SLOW SPAWNED</div> 
-        :
-        <div>{2 - numEaten} before spawn</div>} 
+      :
+      <div className="game-over-popup">
+        <div className="game-over-score">SCORE: {score}</div>
+        <div >GAME OVER</div>
       </div>
+      
+      }
+      
       {!isPaused ? 
         <div className="board">
           {renderBoard()}
         </div>
         :  
-        <div className="game-over-popup">
-          <p>Game Over!</p>
-          <button onClick={startOver}>New Game</button>
+        <div className="try-again">
+          <div >Try Again?</div>
+          <button className="try-again-btn" onClick={startOver}>New Game</button>
         </div>}
     </div>
   );

@@ -13,8 +13,15 @@
     gap: 10px;
 }
 
+.top{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
 .score{
     color: white;
+    font-size: 30px;
 }
 
 .slowSpawn{
@@ -53,5 +60,28 @@
 
 
 .game-over-popup{
-    color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 100px;
+    color: red;
+}
+
+.game-over-score{
+    color:white;
+    font-size: 50px;
+}
+
+.try-again{
+    font-size: 30px;
+    color: greenyellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.try-again-btn{
+    font-size: 20px;
+    padding: 10px;
+    margin: 10px;
 }
