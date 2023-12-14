@@ -4,7 +4,7 @@
 }
 
 .container{
-    background-color: #111;
+    background-color: #251d9e;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -36,11 +36,11 @@
 }
 
 .snake{
-    background-color: green;
+    background-color: rgb(3, 138, 14);
 }
 
 .snakehead{
-    background-color: black;
+    background-color: rgb(78, 211, 149);
 }
 
 .game-over-popup{
