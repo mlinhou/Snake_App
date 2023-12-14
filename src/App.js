@@ -53,6 +53,7 @@ function App() {
   function updateGame() {
     let newSnake = [...snake];
     //remember the x is based on row number, so moving down adds 1 to x
+    //adds a new element to the array at the beginning to move the snake
     switch(direction){
       case "LEFT":
         newSnake.unshift({ x: newSnake[0].x , y: newSnake[0].y - 1});
@@ -67,8 +68,20 @@ function App() {
         newSnake.unshift({ x: newSnake[0].x + 1, y: newSnake[0].y});
         break;
     }
-    newSnake.pop();
+    //pops the element at the end of the array to keep the snake moving if not landing on food
+    if(newSnake[0].x !== food.x || newSnake[0].y !== food.y){
+      
+      newSnake.pop();
+    }
+    
     setSnake(newSnake);
+
+    if(newSnake[0].x == food.x && newSnake[0].y == food.y){
+      const randomX = Math.floor(Math.random() * 20) + 1;
+      const randomY = Math.floor(Math.random() * 20) + 1;
+      setFood({x: randomX, y: randomY});
+    }
+    
   }
 
   function startOver() {
