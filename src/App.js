@@ -11,11 +11,14 @@ function App() {
 
   const [food, setFood] = useState({ x: 5, y: 5});
   const [slowItem, setSlowItem] = useState({ x: 10, y: 10 });
+  const [halfItem, setHalfITem] = useState({ x: 18, y: 18 });
   const [snake, setSnake] = useState(initialSnakePosition);
   const [direction, setDirection] = useState("UP");
   const [isPaused, setIsPaused] = useState(false);
   const [score, setScore] = useState(0);
-  const [speed, setSpeed] = useState(200);
+  const [speed, setSpeed] = useState(150);
+  const [numEaten, setNumEaten] = useState(0);
+  const [numEatenCountHalf, setNumEatenCountHalf] = useState(0);
 
   function renderBoard() {
     let cellArray = [];
@@ -29,9 +32,14 @@ function App() {
           className = className + " food";
         }
 
-        //reduce speed item
-        if(speed <= 180 && slowItem.x === row && slowItem.y === col){
+        //spawns reduce speed item
+        if(numEaten >= 2 && slowItem.x === row && slowItem.y === col){
           className = className + " slowItem";
+        }
+
+        //spawns halfItem
+        if(numEatenCountHalf >=3 && halfItem.x === row && halfItem.y === col){
+          className = className + " halfItem";
         }
 
         //checks first object if true, if not then second object, etc...
@@ -56,10 +64,6 @@ function App() {
     }
 
     return cellArray;
-  }
-
-  function speedBtn() {
-    setSpeed(200);
   }
 
   function updateGame() {
@@ -90,11 +94,22 @@ function App() {
     setSnake(newSnake);
 
     //if eats the slow item
-    if(newSnake[0].x == slowItem.x && newSnake[0].y == slowItem.y && speed <= 180){
+    if(newSnake[0].x == slowItem.x && newSnake[0].y == slowItem.y && numEaten >= 2){
       const randomX = Math.floor(Math.random() * 20);
       const randomY = Math.floor(Math.random() * 20);
-      setSpeed(speed*2);
+      setSpeed(speed+50);
       setSlowItem({x: randomX, y: randomY});
+      setNumEaten(0);
+    }
+
+    //if halfItem gets eaten
+    if(newSnake[0].x == halfItem.x && newSnake[0].y == halfItem.y && numEatenCountHalf >= 3){
+      const randomX = Math.floor(Math.random() * 20);
+      const randomY = Math.floor(Math.random() * 20);
+      setHalfITem({x: randomX, y: randomY});
+      newSnake.pop();
+      newSnake.pop();
+      setNumEatenCountHalf(0);
     }
 
     //game over if snake touches self
@@ -112,6 +127,9 @@ function App() {
       setFood({x: randomX, y: randomY});
       setScore(score + 100);
 
+      //increase numEaten
+      setNumEaten(numEaten + 1);
+      setNumEatenCountHalf(numEatenCountHalf + 1);
       //speed according to score
       if(speed < 100){
         setSpeed(speed - 5);
@@ -130,7 +148,9 @@ function App() {
     setFood({ x: 5, y: 5});
     setScore(0);
     setDirection("UP");
-    setSpeed(200);
+    setSpeed(150);
+    setNumEaten(0);
+    setNumEatenCountHalf(0);
     setIsPaused(false);
   }
 
@@ -177,18 +197,43 @@ function App() {
 
   return (
     <div className="container">
-      <div className="score">
-        Score: <span>{score}</span>
-        <button onClick={speedBtn}>SPEED 200</button>
+      
+      {!isPaused ?
+        <div className="top">
+          <div className="score">
+          Score: <span>{score}</span>
+          </div>
+          <div className="slowSpawn">
+          {numEaten>=2 ? 
+          <div>SLOW SPAWNED</div> 
+          :
+          <div>{2 - numEaten} before slow item spawns</div>
+          } 
+        </div>
+        <div className="halfSpawn">
+          {numEatenCountHalf>=3 ?
+          <div>HALF SNAKE SIZE SPAWNED</div>
+          :
+          <div>{3 - numEatenCountHalf} before half item spawns</div>
+          }
+        </div>
       </div>
+      :
+      <div className="game-over-popup">
+        <div className="game-over-score">SCORE: {score}</div>
+        <div >GAME OVER</div>
+      </div>
+      
+      }
+      
       {!isPaused ? 
         <div className="board">
           {renderBoard()}
         </div>
         :  
-        <div className="game-over-popup">
-          <p>Game Over!</p>
-          <button onClick={startOver}>New Game</button>
+        <div className="try-again">
+          <div >Try Again?</div>
+          <button className="try-again-btn" onClick={startOver}>New Game</button>
         </div>}
     </div>
   );

@@ -4,7 +4,7 @@
 }
 
 .container{
-    background-color: #0b028b;
+    background-color: #0c075a;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -13,15 +13,30 @@
     gap: 10px;
 }
 
-.score{
-    color: white;
+.top{
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
+.score{
+    color: white;
+    font-size: 20px;
+}
+
+.slowSpawn{
+    color: yellow;
+}
+
+.halfSpawn{
+    color: aqua;
+}
 .board{
     display: grid;
     grid-template-columns: repeat(20,30px);
     grid-template-rows: repeat(20,30px);
-    gap: 1px;
+    
     width: max-content;
 }
 
@@ -32,11 +47,15 @@
 }
 
 .food{
-    background-color: rgb(167, 22, 22);
+    background-color: red;
 }
 
 .slowItem{
     background-color: yellow;
+}
+
+.halfItem{
+    background-color: aqua;;
 }
 
 .snake{
@@ -49,5 +68,30 @@
 
 
 .game-over-popup{
-    color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 100px;
+    color: red;
+}
+
+.game-over-score{
+    color:white;
+    font-size: 50px;
+}
+
+.try-again{
+    font-size: 30px;
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.try-again-btn{
+    color: black;
+    background-color: red;
+    font-size: 20px;
+    padding: 10px;
+    margin: 10px;
 }
