@@ -11,12 +11,14 @@ function App() {
 
   const [food, setFood] = useState({ x: 5, y: 5});
   const [slowItem, setSlowItem] = useState({ x: 10, y: 10 });
+  const [halfItem, setHalfITem] = useState({ x: 18, y: 18 });
   const [snake, setSnake] = useState(initialSnakePosition);
   const [direction, setDirection] = useState("UP");
   const [isPaused, setIsPaused] = useState(false);
   const [score, setScore] = useState(0);
   const [speed, setSpeed] = useState(150);
   const [numEaten, setNumEaten] = useState(0);
+  const [numEatenCountHalf, setNumEatenCountHalf] = useState(0);
 
   function renderBoard() {
     let cellArray = [];
@@ -30,9 +32,14 @@ function App() {
           className = className + " food";
         }
 
-        //reduce speed item
+        //spawns reduce speed item
         if(numEaten >= 2 && slowItem.x === row && slowItem.y === col){
           className = className + " slowItem";
+        }
+
+        //spawns halfItem
+        if(numEatenCountHalf >=3 && halfItem.x === row && halfItem.y === col){
+          className = className + " halfItem";
         }
 
         //checks first object if true, if not then second object, etc...
@@ -57,10 +64,6 @@ function App() {
     }
 
     return cellArray;
-  }
-
-  function speedBtn() {
-    setSpeed(150);
   }
 
   function updateGame() {
@@ -99,6 +102,16 @@ function App() {
       setNumEaten(0);
     }
 
+    //if halfItem gets eaten
+    if(newSnake[0].x == halfItem.x && newSnake[0].y == halfItem.y && numEatenCountHalf >= 3){
+      const randomX = Math.floor(Math.random() * 20);
+      const randomY = Math.floor(Math.random() * 20);
+      setHalfITem({x: randomX, y: randomY});
+      newSnake.pop();
+      newSnake.pop();
+      setNumEatenCountHalf(0);
+    }
+
     //game over if snake touches self
     for(let i=1; i<newSnake.length; i++){
       
@@ -116,6 +129,7 @@ function App() {
 
       //increase numEaten
       setNumEaten(numEaten + 1);
+      setNumEatenCountHalf(numEatenCountHalf + 1);
       //speed according to score
       if(speed < 100){
         setSpeed(speed - 5);

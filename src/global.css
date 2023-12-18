@@ -50,6 +50,10 @@
     background-color: yellow;
 }
 
+.halfItem{
+    background-color: aqua;;
+}
+
 .snake{
     background-color: black;
 }
