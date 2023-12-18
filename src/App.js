@@ -16,7 +16,7 @@ function App() {
   const [direction, setDirection] = useState("UP");
   const [isPaused, setIsPaused] = useState(false);
   const [score, setScore] = useState(0);
-  const [speed, setSpeed] = useState(150);
+  const [speed, setSpeed] = useState(100);
   const [numEaten, setNumEaten] = useState(0);
   const [numEatenCountHalf, setNumEatenCountHalf] = useState(0);
 
@@ -33,12 +33,12 @@ function App() {
         }
 
         //spawns reduce speed item
-        if(numEaten >= 2 && slowItem.x === row && slowItem.y === col){
+        if(numEaten >= 5 && slowItem.x === row && slowItem.y === col){
           className = className + " slowItem";
         }
 
         //spawns halfItem
-        if(numEatenCountHalf >=3 && halfItem.x === row && halfItem.y === col){
+        if(numEatenCountHalf >=10 && halfItem.x === row && halfItem.y === col){
           className = className + " halfItem";
         }
 
@@ -94,16 +94,16 @@ function App() {
     setSnake(newSnake);
 
     //if eats the slow item
-    if(newSnake[0].x == slowItem.x && newSnake[0].y == slowItem.y && numEaten >= 2){
+    if(newSnake[0].x == slowItem.x && newSnake[0].y == slowItem.y && numEaten >= 5){
       const randomX = Math.floor(Math.random() * 20);
       const randomY = Math.floor(Math.random() * 20);
-      setSpeed(speed+50);
+      setSpeed(speed+20);
       setSlowItem({x: randomX, y: randomY});
       setNumEaten(0);
     }
 
     //if halfItem gets eaten
-    if(newSnake[0].x == halfItem.x && newSnake[0].y == halfItem.y && numEatenCountHalf >= 3){
+    if(newSnake[0].x == halfItem.x && newSnake[0].y == halfItem.y && numEatenCountHalf >= 10){
       const randomX = Math.floor(Math.random() * 20);
       const randomY = Math.floor(Math.random() * 20);
       setHalfITem({x: randomX, y: randomY});
@@ -131,14 +131,12 @@ function App() {
       setNumEaten(numEaten + 1);
       setNumEatenCountHalf(numEatenCountHalf + 1);
       //speed according to score
-      if(speed < 100){
+      if(speed <= 100){
         setSpeed(speed - 5);
       }
       else if(speed < 50){
         setSpeed(speed - 2);
-      } else {
-        setSpeed(speed - 10);
-      }
+      } 
     }
     
   }
@@ -148,7 +146,7 @@ function App() {
     setFood({ x: 5, y: 5});
     setScore(0);
     setDirection("UP");
-    setSpeed(150);
+    setSpeed(100);
     setNumEaten(0);
     setNumEatenCountHalf(0);
     setIsPaused(false);
@@ -204,17 +202,17 @@ function App() {
           Score: <span>{score}</span>
           </div>
           <div className="slowSpawn">
-          {numEaten>=2 ? 
+          {numEaten>=5 ? 
           <div>SLOW SPAWNED</div> 
           :
-          <div>{2 - numEaten} before slow item spawns</div>
+          <div>Eat {5 - numEaten} more before slow item spawns</div>
           } 
         </div>
         <div className="halfSpawn">
-          {numEatenCountHalf>=3 ?
+          {numEatenCountHalf>=10 ?
           <div>HALF SNAKE SIZE SPAWNED</div>
           :
-          <div>{3 - numEatenCountHalf} before half item spawns</div>
+          <div>Eat {10 - numEatenCountHalf} more before half item spawns</div>
           }
         </div>
       </div>
