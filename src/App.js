@@ -150,6 +150,7 @@ function App() {
     setDirection("UP");
     setSpeed(150);
     setNumEaten(0);
+    setNumEatenCountHalf(0);
     setIsPaused(false);
   }
 
@@ -206,8 +207,15 @@ function App() {
           {numEaten>=2 ? 
           <div>SLOW SPAWNED</div> 
           :
-          <div>{2 - numEaten} before spawn</div>
+          <div>{2 - numEaten} before slow item spawns</div>
           } 
+        </div>
+        <div className="halfSpawn">
+          {numEatenCountHalf>=3 ?
+          <div>HALF SNAKE SIZE SPAWNED</div>
+          :
+          <div>{3 - numEatenCountHalf} before half item spawns</div>
+          }
         </div>
       </div>
       :

@@ -4,7 +4,7 @@
 }
 
 .container{
-    background-color: #0b028b;
+    background-color: #0c075a;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -14,6 +14,7 @@
 }
 
 .top{
+    font-size: 15px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -21,13 +22,16 @@
 
 .score{
     color: white;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .slowSpawn{
     color: yellow;
 }
 
+.halfSpawn{
+    color: aqua;
+}
 .board{
     display: grid;
     grid-template-columns: repeat(20,30px);
@@ -78,13 +82,15 @@
 
 .try-again{
     font-size: 30px;
-    color: greenyellow;
+    color: red;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .try-again-btn{
+    color: black;
+    background-color: red;
     font-size: 20px;
     padding: 10px;
     margin: 10px;
