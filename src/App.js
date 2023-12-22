@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './global.css';
+import axios from 'axios';
 
 function App() {
   let totalGridSize = 20;
@@ -9,6 +10,30 @@ function App() {
     {x: totalGridSize/2 + 1, y: totalGridSize/2}
   ];
 
+  
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:9000/scores'); // Replace with your Node.js API endpoint
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const handlePostRequest = async () => {
+    try {
+      const response = await axios.post('http://localhost:9000/scores', postData);
+      console.log('Response:', response.data);
+      // Handle the response data as needed
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle errors as needed
+    }
+  };
+
+  
+
   const [food, setFood] = useState({ x: 5, y: 5});
   const [slowItem, setSlowItem] = useState({ x: 10, y: 10 });
   const [halfItem, setHalfITem] = useState({ x: 18, y: 18 });
@@ -17,8 +42,13 @@ function App() {
   const [isPaused, setIsPaused] = useState(false);
   const [score, setScore] = useState(0);
   const [speed, setSpeed] = useState(100);
+  const [playerName, setPlayerName] = useState("Anon");
   const [numEaten, setNumEaten] = useState(0);
   const [numEatenCountHalf, setNumEatenCountHalf] = useState(0);
+  const [postData, setPostData] = useState({
+    player: "player name",
+    score: 0
+  });
 
   function renderBoard() {
     let cellArray = [];
@@ -118,6 +148,7 @@ function App() {
       if(newSnake[0].x == newSnake[i].x && newSnake[0].y == newSnake[i].y){
         setIsPaused(true);
       }
+      setPostData({player: playerName, score: score});
     }
 
     //if food is eaten
@@ -233,6 +264,8 @@ function App() {
           <div >Try Again?</div>
           <button className="try-again-btn" onClick={startOver}>New Game</button>
         </div>}
+        <button onClick={fetchData}>get high scores api</button>
+        <button onClick={handlePostRequest}>Post High Score</button>
     </div>
   );
 }
