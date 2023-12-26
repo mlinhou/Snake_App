@@ -22,7 +22,10 @@ function App() {
   };
 
   const handlePostRequest = async () => {
+    
+    
     try {
+      
       const response = await axios.post('http://localhost:9000/scores', postData);
       console.log('Response:', response.data);
       // Handle the response data as needed
@@ -42,13 +45,14 @@ function App() {
   const [isPaused, setIsPaused] = useState(false);
   const [score, setScore] = useState(0);
   const [speed, setSpeed] = useState(100);
-  const [playerName, setPlayerName] = useState("Anon");
   const [numEaten, setNumEaten] = useState(0);
   const [numEatenCountHalf, setNumEatenCountHalf] = useState(0);
+  const [inputText, setInputText] = useState('');
   const [postData, setPostData] = useState({
     player: "player name",
     score: 0
   });
+  const [saved, setSaved] = useState(false);
 
   function renderBoard() {
     let cellArray = [];
@@ -148,7 +152,7 @@ function App() {
       if(newSnake[0].x == newSnake[i].x && newSnake[0].y == newSnake[i].y){
         setIsPaused(true);
       }
-      setPostData({player: playerName, score: score});
+      
     }
 
     //if food is eaten
@@ -181,6 +185,8 @@ function App() {
     setNumEaten(0);
     setNumEatenCountHalf(0);
     setIsPaused(false);
+    setSaved(false);
+    setInputText('');
   }
 
   const handleArrowKeyPress = (event) => {
@@ -207,6 +213,11 @@ function App() {
         break;
     }
   };
+  //user input name
+  const handleInputChange = (e) => {
+    // Update the state with the user input
+    setInputText(e.target.value);
+  };
 
   useEffect(() => {
     // Add event listener when the component mounts
@@ -223,6 +234,11 @@ function App() {
     let interval = setInterval(updateGame, speed);
     return () => clearInterval(interval, updateGame);
   });
+
+  const handleSaveName = () => {
+    setPostData({player: inputText, score: score});
+    setSaved(true);
+  }
 
   return (
     <div className="container">
@@ -250,6 +266,29 @@ function App() {
       :
       <div className="game-over-popup">
         <div className="game-over-score">SCORE: {score}</div>
+        {/*user input name*/}
+        <div>
+        {!saved ? 
+          <label className="userName">Type Player Name: </label>
+          :
+          <div className="saved">SAVED</div>
+          }
+          
+          
+          <input
+            className="userInput"
+            type="text"
+            id="userInput"
+            value={inputText}
+            onChange={handleInputChange}
+          />
+            
+          <button className="userInput" onClick={handleSaveName}>Save name</button>
+          
+          <button className="userInput" onClick={handlePostRequest}>Post High Score</button>
+          <button className="userInput" onClick={fetchData}>get high scores api</button>
+        </div>
+          
         <div >GAME OVER</div>
       </div>
       
@@ -264,8 +303,7 @@ function App() {
           <div >Try Again?</div>
           <button className="try-again-btn" onClick={startOver}>New Game</button>
         </div>}
-        <button onClick={fetchData}>get high scores api</button>
-        <button onClick={handlePostRequest}>Post High Score</button>
+        
     </div>
   );
 }

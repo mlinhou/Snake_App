@@ -80,6 +80,25 @@
     font-size: 50px;
 }
 
+.userInput{
+    color: black;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+.userName{
+    font-size: 20px;
+    color: white;
+}
+
+.saved{
+    color: greenyellow;
+    font-size: 20px;
+}
+
 .try-again{
     font-size: 30px;
     color: red;
@@ -95,3 +114,4 @@
     padding: 10px;
     margin: 10px;
 }
+
