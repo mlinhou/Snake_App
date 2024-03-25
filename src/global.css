@@ -4,7 +4,7 @@
 }
 
 .container{
-    background-color: #0c075a;
+    background-color: #29283a;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -22,7 +22,7 @@
 
 .score{
     color: white;
-    font-size: 20px;
+    font-size: 50px;
 }
 
 .slowSpawn{
@@ -31,6 +31,23 @@
 
 .halfSpawn{
     color: aqua;
+}
+
+.game-container {
+    display: flex;
+    
+}
+
+.instructions {
+    
+    width: 40vw;
+    /* border: 1px solid #000;  */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+    font-size: 30px;
 }
 .board{
     display: grid;
@@ -48,6 +65,7 @@
 
 .food{
     background-color: red;
+    
 }
 
 .slowItem{
@@ -79,6 +97,11 @@
     color:white;
     font-size: 50px;
 }
+.post-score {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
 
 .userInput{
     color: black;
@@ -86,6 +109,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin: 10px;
     
 }
 

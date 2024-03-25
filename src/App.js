@@ -231,7 +231,7 @@ function App() {
 
   //Updates game
   useEffect(() => {
-    let interval = setInterval(updateGame, speed);
+    let interval = setInterval(updateGame, speed);//should be speed variable
     return () => clearInterval(interval, updateGame);
   });
 
@@ -248,6 +248,44 @@ function App() {
           <div className="score">
           Score: <span>{score}</span>
           </div>
+          
+      </div>
+      :
+      <div className="game-over-popup">
+        <div className="game-over-score">SCORE: {score}</div>
+        {/*user input name*/}
+        {/* <div className="post-score">
+        {!saved ? 
+          <label className="userName">Player Name: </label>
+          :
+          <div className="saved">SAVED</div>
+          }
+          
+          
+          <input
+            className="userInput"
+            type="text"
+            id="userInput"
+            value={inputText}
+            onChange={handleInputChange}
+          /> */}
+            
+          {/* <button className="userInput" onClick={handleSaveName}>Save name</button> */}
+          {/* {<button className="userInput" onClick={handlePostRequest}>Post High Score</button> */}
+          {/* <button className="userInput" onClick={fetchData}>get high scores api</button> */}
+        {/* </div> */}
+          
+        <div >GAME OVER</div>
+      </div>
+      
+      }
+      
+      {!isPaused ? 
+      <div className="game-container">
+        <div className='instructions'>
+          <div>
+          Arrow Keys To Move Snake
+          </div>
           <div className="slowSpawn">
           {numEaten>=5 ? 
           <div>SLOW SPAWNED</div> 
@@ -262,46 +300,16 @@ function App() {
           <div>Eat {10 - numEatenCountHalf} more before half item spawns</div>
           }
         </div>
-      </div>
-      :
-      <div className="game-over-popup">
-        <div className="game-over-score">SCORE: {score}</div>
-        {/*user input name*/}
-        <div>
-        {!saved ? 
-          <label className="userName">Type Player Name: </label>
-          :
-          <div className="saved">SAVED</div>
-          }
-          
-          
-          <input
-            className="userInput"
-            type="text"
-            id="userInput"
-            value={inputText}
-            onChange={handleInputChange}
-          />
-            
-          <button className="userInput" onClick={handleSaveName}>Save name</button>
-          
-          <button className="userInput" onClick={handlePostRequest}>Post High Score</button>
-          <button className="userInput" onClick={fetchData}>get high scores api</button>
         </div>
-          
-        <div >GAME OVER</div>
-      </div>
-      
-      }
-      
-      {!isPaused ? 
         <div className="board">
           {renderBoard()}
         </div>
+      </div>
+        
         :  
         <div className="try-again">
-          <div >Try Again?</div>
-          <button className="try-again-btn" onClick={startOver}>New Game</button>
+          
+          <button className="try-again-btn" onClick={startOver}>Try Again</button>
         </div>}
         
     </div>
