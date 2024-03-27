@@ -13,6 +13,25 @@
     gap: 10px;
 }
 
+.welcome{
+    color: white;
+}
+
+.instructions-blue{
+    color: aqua;
+    font-size: 30px;
+}
+
+.instructions-yellow{
+    color: yellow;
+    font-size: 30px;
+}
+
+.link{
+    color: rgb(34, 230, 34);
+    font-size: 30px;
+}
+
 .top{
     font-size: 15px;
     display: flex;
