@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import './global.css';
-import axios from 'axios';
 
 function Snake() {
   let totalGridSize = 20;
@@ -14,10 +13,20 @@ function Snake() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:9000/scores'); // Replace with your Node.js API endpoint
-      console.log(response.data);
+      const response = await fetch('http://localhost:8080/api/users', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json(); // Parse the JSON response body
+      console.log('Data received:', data); // Check if 'data' contains the expected response
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error posting data:', error);
     }
   };
 
@@ -26,12 +35,24 @@ function Snake() {
     
     try {
       
-      const response = await axios.post('http://localhost:9000/scores', postData);
-      console.log('Response:', response.data);
-      // Handle the response data as needed
+      const response = await fetch('http://localhost:8080/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: postData.name,
+          score: postData.score
+        }),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json(); // Parse the JSON response body
+      console.log('Data received:', data); // Check if 'data' contains the expected response
     } catch (error) {
-      console.error('Error:', error);
-      // Handle errors as needed
+      console.error('Error posting data:', error);
     }
   };
 
@@ -49,7 +70,7 @@ function Snake() {
   const [numEatenCountHalf, setNumEatenCountHalf] = useState(0);
   const [inputText, setInputText] = useState('');
   const [postData, setPostData] = useState({
-    player: "player name",
+    name: "player name",
     score: 0
   });
   const [saved, setSaved] = useState(false);
@@ -236,7 +257,7 @@ function Snake() {
   });
 
   const handleSaveName = () => {
-    setPostData({player: inputText, score: score});
+    setPostData({name: inputText, score: score});
     setSaved(true);
   }
 
@@ -253,8 +274,8 @@ function Snake() {
       :
       <div className="game-over-popup">
         <div className="game-over-score">SCORE: {score}</div>
-        {/*user input name*/}
-        {/* <div className="post-score">
+        
+        <div className="post-score">
         {!saved ? 
           <label className="userName">Player Name: </label>
           :
@@ -268,17 +289,16 @@ function Snake() {
             id="userInput"
             value={inputText}
             onChange={handleInputChange}
-          /> */}
+          />
             
-          {/* <button className="userInput" onClick={handleSaveName}>Save name</button> */}
-          {/* {<button className="userInput" onClick={handlePostRequest}>Post High Score</button> */}
-          {/* <button className="userInput" onClick={fetchData}>get high scores api</button> */}
-        {/* </div> */}
+          <button className="userInput" onClick={handleSaveName}>Save name</button> 
+          <button className="userInput" onClick={handlePostRequest}>Post High Score</button> 
+          <button className="userInput" onClick={fetchData}>get high scores api</button> 
+        </div>
           
         <div >GAME OVER</div>
       </div>
-      
-      }
+      } 
       
       {!isPaused ? 
       <div className="game-container">
