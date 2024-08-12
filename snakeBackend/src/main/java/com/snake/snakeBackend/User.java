@@ -10,6 +10,6 @@ public class User {
     @Id
     private String id;
     private String name;
-    private int age;
+    private int score;
 
 }
