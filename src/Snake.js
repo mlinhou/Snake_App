@@ -24,7 +24,9 @@ function Snake() {
       }
   
       const data = await response.json(); // Parse the JSON response body
-      console.log('Data received:', data); // Check if 'data' contains the expected response
+      
+      setHighScores(data);
+      console.log('Data received:', highScores); // Check if 'data' contains the expected response
     } catch (error) {
       console.error('Error posting data:', error);
     }
@@ -74,6 +76,7 @@ function Snake() {
     score: 0
   });
   const [saved, setSaved] = useState(false);
+  const [highScores, setHighScores] = useState([]);
 
   function renderBoard() {
     let cellArray = [];
@@ -297,6 +300,18 @@ function Snake() {
         </div>
           
         <div >GAME OVER</div>
+        <div className="highScores">
+          <ul>
+            {highScores.map((score, index) => (
+              <div>
+                <li key={index}>Player: {score.name} Score: {score.score}</li>
+                
+              </div>
+              
+              
+            ))}
+          </ul>
+        </div>
       </div>
       } 
       
