@@ -22,14 +22,16 @@ function Snake() {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-  
-      const data = await response.json(); // Parse the JSON response body
       
-      setHighScores(data);
+      const data = await response.json(); // Parse the JSON response body
+      setHighScores(data)
+      
       console.log('Data received:', highScores); // Check if 'data' contains the expected response
+      
     } catch (error) {
       console.error('Error posting data:', error);
     }
+    
   };
 
   const handlePostRequest = async () => {
@@ -264,6 +266,15 @@ function Snake() {
     setSaved(true);
   }
 
+  const sortScores = () => {
+    
+    highScores.sort((a,b) => b.score - a.score);
+    console.log("high scores: " + highScores)
+    setHighScores(highScores);
+  }
+
+  
+
   return (
     <div className="container">
       
@@ -297,21 +308,11 @@ function Snake() {
           <button className="userInput" onClick={handleSaveName}>Save name</button> 
           <button className="userInput" onClick={handlePostRequest}>Post High Score</button> 
           <button className="userInput" onClick={fetchData}>get high scores api</button> 
+          <button onClick={sortScores}>sort</button>
         </div>
           
         <div >GAME OVER</div>
-        <div className="highScores">
-          <ul>
-            {highScores.map((score, index) => (
-              <div>
-                <li key={index}>Player: {score.name} Score: {score.score}</li>
-                
-              </div>
-              
-              
-            ))}
-          </ul>
-        </div>
+        
       </div>
       } 
       
@@ -343,6 +344,19 @@ function Snake() {
           
           <button className="try-again-btn" onClick={startOver}>Try Again</button>
         </div>}
+        <div className="highScores">
+          
+          <ul>
+            {highScores.map((score, index) => (
+              <div>
+                <li key={index}>Player: {score.name} Score: {score.score}</li>
+                
+              </div>
+              
+              
+            ))}
+          </ul>
+        </div>
         
     </div>
   );
