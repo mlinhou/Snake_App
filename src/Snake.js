@@ -58,6 +58,8 @@ function Snake() {
     } catch (error) {
       console.error('Error posting data:', error);
     }
+    fetchData();
+    
   };
 
   
@@ -261,9 +263,16 @@ function Snake() {
     return () => clearInterval(interval, updateGame);
   });
 
-  const handleSaveName = () => {
-    setPostData({name: inputText, score: score});
-    setSaved(true);
+  const handleSaveName = async () => {
+    
+    
+      setPostData({name: inputText, score: score});
+      setSaved(true);
+
+    
+      
+    
+    
   }
 
   const sortScores = () => {
@@ -272,6 +281,8 @@ function Snake() {
     console.log("high scores: " + highScores)
     setHighScores(highScores);
   }
+
+  
 
   
 
@@ -307,7 +318,6 @@ function Snake() {
             
           <button className="userInput" onClick={handleSaveName}>Save name</button> 
           <button className="userInput" onClick={handlePostRequest}>Post High Score</button> 
-          <button className="userInput" onClick={fetchData}>get high scores api</button> 
           <button onClick={sortScores}>sort</button>
         </div>
           
