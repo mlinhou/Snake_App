@@ -146,6 +146,7 @@
     font-size: 30px;
     color: red;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -158,7 +159,20 @@
     margin: 10px;
 }
 
-.highScores {
+.flex-list {
     color: greenyellow;
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap into the next row */
+    padding: 0;
+    margin: 0;
+    list-style-type: none; /* Removes bullets */
+    
+  }
+  
+  .flex-list li {
     font-size: 20px;
-}
+    flex: 1 0 20%; /* Each item takes up 20% of the container width (100%/5 = 20%) */
+    padding: 2px;
+    box-sizing: border-box;
+    text-align: left;
+  }
