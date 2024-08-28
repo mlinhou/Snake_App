@@ -268,10 +268,6 @@ function Snake() {
     
       setPostData({name: inputText, score: score});
       setSaved(true);
-
-    
-      
-    
     
   }
 
@@ -353,20 +349,18 @@ function Snake() {
         <div className="try-again">
           
           <button className="try-again-btn" onClick={startOver}>Try Again</button>
-        </div>}
-        <div className="highScores">
-          
-          <ul>
+          <ul className="flex-list">
             {highScores.map((score, index) => (
-              <div>
-                <li key={index}>Player: {score.name} Score: {score.score}</li>
+              
+                <li key={index}>{score.name} {score.score}</li>
                 
-              </div>
-              
-              
             ))}
           </ul>
-        </div>
+        </div>}
+       
+          
+          
+        
         
     </div>
   );
