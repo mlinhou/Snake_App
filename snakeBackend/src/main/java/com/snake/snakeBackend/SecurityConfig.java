@@ -17,7 +17,7 @@ public class SecurityConfig {
                 )
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/oauth2/authorization/google") // Custom login page
-                        .defaultSuccessUrl("/home", true) // Redirect URL after successful login
+                        .defaultSuccessUrl("http://localhost:3000/Snake/", true) // Redirect URL after successful login
                 );
 
         return http.build();
